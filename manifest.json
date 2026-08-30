@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Codex Browser Companion",
+  "version": "1.0.0",
+  "description": "Safely capture page context, redact sensitive data, and prepare focused prompts for Codex.",
+  "minimum_chrome_version": "114",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "sidePanel",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open Codex Browser Companion"
+  },
+  "side_panel": {
+    "default_path": "src/sidepanel.html"
+  },
+  "commands": {
+    "capture-page-context": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Capture the current page in Codex Browser Companion"
+    }
+  }
+}

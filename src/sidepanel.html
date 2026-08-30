@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Codex Browser Companion</title>
+    <link rel="stylesheet" href="sidepanel.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M7 3.5h7.5L19 8v12.5H7z"></path>
+            <path d="M14.5 3.5V8H19M10 12h6M10 15h6"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow">LOCAL-FIRST WORKFLOW</p>
+          <h1>Codex Companion</h1>
+        </div>
+        <span class="privacy-pill" title="Page data stays local until you copy it">Local</span>
+      </header>
+
+      <main>
+        <section class="page-card" aria-labelledby="source-heading">
+          <div class="section-heading">
+            <div>
+              <p class="step">01 · SOURCE</p>
+              <h2 id="source-heading">Current page</h2>
+            </div>
+            <span id="captureState" class="status-badge">Not captured</span>
+          </div>
+
+          <div class="page-summary">
+            <div class="page-icon" aria-hidden="true">↗</div>
+            <div class="page-text">
+              <strong id="pageTitle">Open a page to begin</strong>
+              <span id="pageUrl">Only the active tab is read after you click capture.</span>
+            </div>
+          </div>
+
+          <button id="captureButton" class="button button-primary button-wide" type="button">
+            <span aria-hidden="true">◎</span>
+            Capture current page
+          </button>
+          <p id="captureHint" class="hint">No history access. No background collection. Form input values are never read.</p>
+        </section>
+
+        <section class="editor-card" aria-labelledby="task-heading">
+          <div class="section-heading">
+            <div>
+              <p class="step">02 · PREPARE</p>
+              <h2 id="task-heading">Shape the request</h2>
+            </div>
+          </div>
+
+          <label class="field-label" for="templateSelect">Prompt template</label>
+          <select id="templateSelect"></select>
+          <p id="templateDescription" class="field-help"></p>
+
+          <label class="field-label" for="customInstructions">Extra instructions <span>optional</span></label>
+          <textarea id="customInstructions" rows="3" maxlength="2000" placeholder="For example: answer in Chinese and include an action checklist."></textarea>
+
+          <div class="two-column">
+            <fieldset>
+              <legend>Output format</legend>
+              <div class="segmented" role="group" aria-label="Output format">
+                <label><input type="radio" name="outputFormat" value="markdown" checked><span>Markdown</span></label>
+                <label><input type="radio" name="outputFormat" value="json"><span>JSON</span></label>
+              </div>
+            </fieldset>
+            <label class="range-field" for="maxChars">
+              <span>Body limit <output id="maxCharsValue">8,000</output></span>
+              <input id="maxChars" type="range" min="2000" max="20000" step="1000" value="8000">
+            </label>
+          </div>
+
+          <details class="options">
+            <summary>Capture options</summary>
+            <div class="option-grid">
+              <label><input id="includeBody" type="checkbox" checked> Visible page text</label>
+              <label><input id="includeSelection" type="checkbox" checked> Selected text</label>
+              <label><input id="includeHeadings" type="checkbox" checked> Page outline</label>
+              <label><input id="includeLinks" type="checkbox"> Useful links</label>
+            </div>
+          </details>
+
+          <label class="privacy-toggle" for="redactSensitive">
+            <span class="toggle-copy">
+              <strong>Automatic privacy redaction</strong>
+              <small>Mask emails, tokens, secrets, and sensitive URL parameters.</small>
+            </span>
+            <input id="redactSensitive" type="checkbox" checked>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+        </section>
+
+        <section class="preview-card" aria-labelledby="preview-heading">
+          <div class="section-heading preview-heading-row">
+            <div>
+              <p class="step">03 · REVIEW</p>
+              <h2 id="preview-heading">Privacy preview</h2>
+            </div>
+            <div class="preview-stats" aria-live="polite">
+              <span id="charCount">0 chars</span>
+              <span id="redactionCount">0 redacted</span>
+            </div>
+          </div>
+          <textarea id="preview" class="preview" readonly spellcheck="false" aria-label="Generated prompt preview"></textarea>
+          <p class="hint">Review this exact text before copying it to Codex.</p>
+        </section>
+
+        <section class="actions" aria-label="Export actions">
+          <button id="copyButton" class="button button-primary" type="button" disabled>Copy prompt</button>
+          <button id="downloadButton" class="button button-secondary" type="button" disabled>Download</button>
+          <button id="openCodexButton" class="button button-ghost" type="button">Open Codex Cloud ↗</button>
+        </section>
+      </main>
+
+      <footer>
+        Independent open-source companion. Not affiliated with or endorsed by OpenAI.
+      </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>
